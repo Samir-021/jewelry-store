@@ -1,3 +1,4 @@
+from django.conf import settings
 from .models import Cart
 import hmac
 import hashlib
@@ -13,7 +14,7 @@ def get_cart(request):
     return cart
 
 def generate_signature(total_amount, transaction_uuid, product_code):
-    secret_key = "8gBm/:&EnhH.1/q"  # UAT key
+    secret_key = getattr(settings, "ESEWA_SECRET_KEY", "8gBm/:&EnhH.1/q")
 
     message = f"total_amount={total_amount},transaction_uuid={transaction_uuid},product_code={product_code}"
 
